@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_start_check_network"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始网速监测" />
+
+    <Button
+        android:id="@+id/btn_stop_check_network"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="停止网速监测" />
+
+    <Button
+        android:id="@+id/btn_choose_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择应用监测" />
+
+</LinearLayout>
