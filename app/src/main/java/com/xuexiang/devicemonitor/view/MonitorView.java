@@ -3,9 +3,11 @@ package com.xuexiang.devicemonitor.view;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.widget.TextView;
 
 import com.xuexiang.devicemonitor.R;
+import com.xuexiang.devicemonitor.utils.Utils;
 
 import java.text.DecimalFormat;
 
@@ -63,6 +65,12 @@ public class MonitorView extends BaseFloatView {
     protected void initListener() {
         getFloatRootView().setOnTouchListener(this);
 
+        setOnFloatViewClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.openApp(getContext(), getContext().getPackageName());
+            }
+        });
 //        getContext().registerReceiver(mNetWorkBroadcastReceiver, new IntentFilter(NetWorkMonitorService.ACTION_NETWORK_SPEED_INFO));
     }
 
@@ -119,8 +127,8 @@ public class MonitorView extends BaseFloatView {
      * @param downLoadSpeed
      */
     private void showSpeedInfo(double upLoadSpeed, double downLoadSpeed) {
-        mTvUpLoadInfo.setText("上传：" + mSpeedFormat.format(upLoadSpeed / 1024D) + "kb/s");
-        mTvDownLoadInfo.setText("下载：" + mSpeedFormat.format(downLoadSpeed / 1024D) + "kb/s");
+        mTvUpLoadInfo.setText(String.format("上传：%skb/s", mSpeedFormat.format(upLoadSpeed / 1024D)));
+        mTvDownLoadInfo.setText(String.format("下载：%skb/s", mSpeedFormat.format(downLoadSpeed / 1024D)));
     }
 
 

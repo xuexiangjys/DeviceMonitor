@@ -1,13 +1,16 @@
 package com.xuexiang.devicemonitor.utils;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 /**
  * @author xuexiang
@@ -87,12 +90,33 @@ public final class Utils {
     }
 
     /**
+     * 页面跳转
+     *
+     * @param intent
+     */
+    public static void startActivity(Context context, Intent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+            try {
+                context.startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
+                Log.e("Utils", Log.getStackTraceString(e));
+            }
+        } else {
+            Log.e("Utils", "[resolveActivity failed]: " + intent.getComponent().getClassName() + " do not register in manifest");
+        }
+    }
+
+    /**
      * 打开指定的应用
      *
      * @param context
      */
     public static void openApp(Context context, final String packageName) {
-        context.startActivity(getLaunchAppIntent(context, packageName));
+        startActivity(context, getLaunchAppIntent(context, packageName));
     }
 
     /**
