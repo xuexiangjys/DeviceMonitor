@@ -1,6 +1,10 @@
 package com.xuexiang.devicemonitor.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +32,7 @@ public class MainActivity extends BaseActivity {
      */
     @Override
     protected void initViews() {
-
+        requestSystemAlertWindow(this);
     }
 
     /**
@@ -55,6 +59,20 @@ public class MainActivity extends BaseActivity {
 
             default:
                 break;
+        }
+    }
+
+    /**
+     * 申请android.permission.SYSTEM_ALERT_WINDOW权限
+     * @param activity
+     */
+    public static void requestSystemAlertWindow(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(activity)) {
+                Intent serviceIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + activity.getPackageName()));
+                activity.startActivityForResult(serviceIntent, 1001);
+            }
         }
     }
 }
